@@ -1,4 +1,7 @@
-const int irSensorPin = 3; // IR sensorun bagli oldugu PIN
+const int BirinciIRSensorPin = 3; // IR sensorun bagli oldugu PIN
+const int IkinciIRSensorPin = 2; // IR sensorun bagli oldugu PIN
+const int BirinciRenkSensorPin = 4; // IR sensorun bagli oldugu PIN
+const int IkinciRenkSensorPin = 5; // IR sensorun bagli oldugu PIN
 const float reflektorlerArasiMesafe = 4.0; // metre cinsinden reflektor arasi mesafe
 int reflektorSayi = 0; //reflektor sayisi
 float gidilenMesafe = 0.0; //gidilen mesafe
@@ -20,21 +23,24 @@ void loop() {
   if(reflektorSayi == 1){
     ilkReflektorZaman = millis();
     }
- 
-  while (digitalRead(irSensorPin) == LOW) {} //reflektor goruldugu sure boyunca dongude kalir
+  // Sensörlerden en az 1 tanesi reflektoru goruyor
+  while (digitalRead(BirinciIRSensorPin) == LOW || digitalRead(IkinciIRSensorPin) == LOW) {} //reflektor goruldugu sure boyunca dongude kalir
 
   // reflektoru gormeyi biraktigi zamani kaydet
   unsigned long baslangicZaman = millis();
 
     
-  // IR sensör artik reflektoru gormuyor
-  while (digitalRead(irSensorPin) == HIGH) {}
+  // her iki IR sensör artik reflektoru gormuyor
+  while (digitalRead(BirinciIRSensorPin) == HIGH && digitalRead(IkinciIRSensorPin) == HIGH) {}
 
   // reflektorun artık tesbit edilmediği zamani kaydet
   unsigned long bitisZaman = millis();
 
   // 5cm aralikli reflektor tesbiti
+  // Renk sensörlerinin en az birinin sinyal vermesi halinde fonksiyon tetiklenir
+  if(digitalRead(BirinciRenkSensorPin) == HIGH || digitalRead(IkinciRenkSensorPin) == HIGH ){
   besCmTetik();
+  }
   
   // gorulen reflektor sayisina gore mesafeyi hesapla
   mesafeHesap();
