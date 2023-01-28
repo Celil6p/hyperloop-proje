@@ -38,9 +38,7 @@ void loop() {
 
   // 5cm aralikli reflektor tesbiti
   // Renk sensörlerinin en az birinin sinyal vermesi halinde fonksiyon tetiklenir
-  if(digitalRead(BirinciRenkSensorPin) == HIGH || digitalRead(IkinciRenkSensorPin) == HIGH ){
   besCmTetik();
-  }
   
   // gorulen reflektor sayisina gore mesafeyi hesapla
   mesafeHesap();
@@ -92,11 +90,11 @@ void besCmTetik(){
 
   // 19.reflektordeki 5cmlik dalga
   
-  if(reflektorSayi > 19 && reflektorSayi <= 38 && kmHiz > 200.00){
+  if((digitalRead(BirinciRenkSensorPin) == HIGH || digitalRead(IkinciRenkSensorPin) == HIGH ) && reflektorSayi > 19 && reflektorSayi <= 38 && kmHiz > 200.00){
       reflektorSayi = 38;
   }
   //51.reflektordeki 5cmlik dalga
-  else if( reflektorSayi > 39  && reflektorSayi <= 60 && kmHiz > 200.00){ 
+  else if((digitalRead(BirinciRenkSensorPin) == HIGH || digitalRead(IkinciRenkSensorPin) == HIGH ) && reflektorSayi > 39  && reflektorSayi <= 60 && kmHiz > 200.00){ 
       reflektorSayi = 60;
   }
   // reflektor sayisini artir
